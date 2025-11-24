@@ -1,0 +1,78 @@
+ Modular Arithmetic (remainder tracking)
+
+Current remainder = 3  // "011" gives 3 % 5 = 3
+
+Add bit 1:
+remainder = (3 × 2 + 1) % 5
+remainder = (6 + 1) % 5  
+remainder = 7 % 5
+remainder = 2
+
+Is remainder == 0? NO → false
+```
+
+**Verification**: `0111` in binary = 7 in decimal, and 7 % 5 = 2 ✓
+
+## Complete sequence for `[0,1,1,1]`:
+```
+i=0, bit=0: "0" = 0
+  remainder = (0×2 + 0) % 5 = 0 → true ✓
+
+i=1, bit=1: "01" = 1  
+  remainder = (0×2 + 1) % 5 = 1 → false
+
+i=2, bit=1: "011" = 3
+  remainder = (1×2 + 1) % 5 = 3 → false
+
+i=3, bit=1: "0111" = 7
+  remainder = (3×2 + 1) % 5 = 7 % 5 = 2 → false
+
+**int new_val = old_val * 2 + new_bit;**
+
+
+You get 1230 = 123 × 10!
+Why? Because each digit moved one place to the LEFT:
+
+The 3 was in the "ones" place (10⁰), now it's in the "tens" place (10¹)
+The 2 was in the "tens" place (10¹), now it's in the "hundreds" place (10²)
+The 1 was in the "hundreds" place (10²), now it's in the "thousands" place (10³)
+
+Each place is 10 times larger, so the whole number becomes 10 times larger!
+
+
+
+
+
+class Solution {
+public:
+
+    vector<bool> prefixesDivBy5(vector<int>& nums) {
+        int n=nums.size();
+        vector<bool>ans;
+        int rem=0;//we are tracking remainders
+        for(int i=0;i<n;i++){
+          rem=(rem*2+nums[i])%5;
+          ans.push_back(rem==0);
+        }
+        return ans;
+    }
+};
+
+
+// The formula `(remainder × 2 + bit) % 5` is always building the correct next number's remainder, whether the previous remainder was 0, 1, 2, 3, or 4.
+
+// When remainder = 0:
+// - We're saying: "Previous number was a multiple of 5"
+// - `0 × 2 = 0` means "doubling a multiple of 5 gives another multiple of 5"
+// - Then we add the new bit
+
+// We never need to remember the actual number (5, 10, 15, etc.), just whether it's a multiple of 5 or not!
+
+// ## Visual Proof: Complete Trace `[1,0,1,0,1]`
+// ```
+// Actual Numbers:          Remainders:
+// i=0: "1" = 1            remainder = 1
+// i=1: "10" = 2           remainder = 2  
+// i=2: "101" = 5          remainder = 0  ← Goes to 0
+// i=3: "1010" = 10        remainder = 0  ← Still correct!
+// i=4: "10101" = 21       remainder = 1  ← Continues correctly!
