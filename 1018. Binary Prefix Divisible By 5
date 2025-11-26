@@ -76,3 +76,5 @@ public:
 // i=2: "101" = 5          remainder = 0  ← Goes to 0
 // i=3: "1010" = 10        remainder = 0  ← Still correct!
 // i=4: "10101" = 21       remainder = 1  ← Continues correctly!
+
+we care for the the last digit tho and if we know the remainder of last number then we can get next number's remainder
