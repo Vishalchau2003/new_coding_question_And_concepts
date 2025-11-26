@@ -1,0 +1,76 @@
+class Solution {
+public:
+    int smallestRepunitDivByK(int k) {
+        if(k%2==0&&k%5==0) return -1;
+        int rem=0;
+        int len=0;
+        for(int i=0;i<k;i++){
+          rem=(rem*10+1)%k;//we need to create 1 so use rem=0 at first
+          len++;//after adding each 1 just increase the length
+          if(rem==0) return len;
+        }
+        return -1;
+    }
+};
+
+
+
+
+Suppose remainder r appears at step 3:
+111 % k = r
+And remainder r appears AGAIN at step 8:
+11111111 % k = r
+
+
+Now look:
+
+At step 3, remainder = r
+At step 8, remainder = r
+
+What will happen at step 9?
+
+next_remainder = (r * 10 + 1) % k
+
+SAME as what happened at step 4.
+
+So steps 8→9→10→11…
+will repeat steps 3→4→5→6…
+📌 This means we are in a cycle.
+📌 And we will never hit remainder = 0.
+so we will always get remainder from 0 to k(for any number=k)
+
+1 % 7 = 1
+11 % 7 = 4
+111 % 7 = 6
+1111 % 7 = 5
+11111 % 7 = 2
+111111 % 7 = 0 → DONE!   ✔
+
+
+
+
+But instead of building full number, we maintain:
+rem = (rem * 10 + 1) % k
+
+This uses the formula:
+
+new_number = previous_number * 10 + 1
+
+
+But instead of building the number, we only keep remainder.
+
+🚀 REMAINDER UPDATE EXPLAINED
+
+Suppose:
+
+previous number = X  
+remainder = X % k
+
+
+Then adding a new 1 at the end:
+
+new_number = X*10 + 1
+new_remainder = (previous_remainder * 10 + 1) % k
+
+
+This keeps everything small.
