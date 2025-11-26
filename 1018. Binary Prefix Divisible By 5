@@ -78,3 +78,5 @@ public:
 // i=4: "10101" = 21       remainder = 1  ← Continues correctly!
 
 we care for the the last digit tho and if we know the remainder of last number then we can get next number's remainder
+
+and we need to use this method to track only remainder because we kept multipying tho so number is getting so big hence we need to use remainder only
